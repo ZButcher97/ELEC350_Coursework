@@ -86,8 +86,8 @@ void post()
     redLED = 0;
     
     //Network test (if BOTH switches are held down)
-    //networktest();
-		puts("IMPORTANT! Network Post Test Not Ran`	\n\r");
+    networktest();
+		//puts("IMPORTANT! Network Post Test Not Ran	\n\r");
     
     puts("**********POST END**********\n\r");
  
