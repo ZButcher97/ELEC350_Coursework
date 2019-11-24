@@ -9,22 +9,27 @@ void networktest()
     
     lcd.cls();
     lcd.printf("Basic HTTP server example\n\r");
+		printf("Basic HTTP server example\n\r");
     
     //Configure an ethernet connection
     EthernetInterface eth;
     eth.set_network(IP, NETMASK, GATEWAY);
+		printf("Connecting\n\r");
     eth.connect();
     lcd.printf("The target IP address is '%s'\n\r", eth.get_ip_address());
-    printf("The target IP address is '%s'\n\r");
+    printf("The target IP address is '%s'\n\r", eth.get_ip_address());
     //Now setup a web server
     TCPServer srv;           //TCP/IP Server
     TCPSocket clt_sock;      //Socket for communication
     SocketAddress clt_addr;  //Address of incoming connection
     
+		
     /* Open the server on ethernet stack */
+		printf("Server open\n\r");
     srv.open(&eth);
     
     /* Bind the HTTP port (TCP 80) to the server */
+		printf("Binding ip port\n\r");
     srv.bind(eth.get_ip_address(), 80);
     
     /* Can handle 5 simultaneous connections */
@@ -38,8 +43,10 @@ void networktest()
         printf("Open 10.0.0.1 in a browser\n\r");
 			
         //Block and wait on an incoming connection
+			printf("waiting to accept incomming connections\n\r");
         srv.accept(&clt_sock, &clt_addr);
-        printf("accept %s:%d\n\r", clt_addr.get_ip_address(), clt_addr.get_port());
+        
+				printf("accept %s:%d\n\r", clt_addr.get_ip_address(), clt_addr.get_port());
 			
         //Uses a C++ string to make it easier to concatinate
         string response;
