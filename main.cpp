@@ -7,7 +7,7 @@
 //Threads
 Thread nwrkThread;
  
-//Test git comment change on surface
+//Test git comment
 int main() {
     //Greeting
     printf("Testing\n\r");    
