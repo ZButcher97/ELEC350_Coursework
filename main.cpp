@@ -54,13 +54,13 @@ int main() {
         
         //Write new data to LCD (not fast!)
         lcd.cls();
-        lcd.printf("Temp   Pressure\n"); 
+        lcd.printf("Temp   Pressure\n\r"); 
         lcd.printf("%6.1f ",temp);
-        lcd.printf("%.2f\n",pressure);
+        lcd.printf("%.2f\n\r",pressure);
 			
 				printf("Temp   Pressure\n"); 
         printf("%6.1f ",temp);
-        printf("%.2f\n",pressure);
+        printf("%.2f\n\r",pressure);
         
         //Write to SD (potentially slow)
         fprintf(fp, "%6.1f,%.2f\n\r", temp, pressure);

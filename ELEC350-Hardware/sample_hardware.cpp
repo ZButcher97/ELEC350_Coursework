@@ -27,7 +27,7 @@ BMP280 sensor(PB_9, PB_8);
 
 //LCD Driver (provided via mbed repository)
 //RS D9
-//E  D8
+//E  D8  
 //D7,6,4,2 are the 4 bit for d4-7
 TextLCD lcd(D9, D8, D7, D6, D4, D2); // rs, e, d4-d7
 
