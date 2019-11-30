@@ -36,4 +36,7 @@ extern SDBlockDevice sd;
 extern void post();
 extern void errorCode(ELEC350_ERROR_CODE err);
 
+FILE* SD_Open(string _fileName);
+void SD_Unmount();
+
 #endif

@@ -86,8 +86,55 @@ void post()
     redLED = 0;
     
     //Network test (if BOTH switches are held down)
-    networktest();
+		if(sw1 == 1 && sw2 == 1)
+		{
+			printf("Network Test");
+			networktest();
+		}
 		//puts("IMPORTANT! Network Post Test Not Ran	\n\r");
+
+		
+		//Initialise the SD card (this needs to move)
+    if ( sd.init() != 0) {
+        printf("Init failed \n\r");
+        lcd.cls();
+				lcd.locate(0,0);
+        lcd.printf("CANNOT INIT SD");        
+        errorCode(FATAL);
+    } 
+    
+    //Create a filing system for SD Card
+    FATFileSystem fs("sd", &sd);     
+
+    FILE* fp = SD_Open("test.csv");
+    
+    //Last message before sampling begins
+    lcd.cls();
+    lcd.printf("READY\n\n");
+		printf("READY\n\r");  
+			
+        //Read environmental sensors
+        temp = sensor.getTemperature();
+        pressure = sensor.getPressure();
+        
+        //Write new data to LCD (not fast!)
+        lcd.cls();
+        lcd.printf("Temp   Pressure\n\r"); 
+        lcd.printf("%6.1f \n\r",temp);
+        lcd.printf("%.2f\n\r",pressure);
+			
+				printf("Temp   Pressure\n"); 
+        printf("%6.1f \n\r",temp);
+        printf("%.2f\n\r",pressure);
+        
+        //Write to SD (potentially slow)
+        fprintf(fp, "%6.1f,%.2f\n\r", temp, pressure);
+				
+				//Close File
+    fclose(fp);
+
+printf("SD Card initalised\n\r");
+   
     
     puts("**********POST END**********\n\r");
  
@@ -109,4 +156,28 @@ void errorCode(ELEC350_ERROR_CODE err)
             wait_us(100000);             
         }
     };
+}
+
+void SD_Unmount()
+{
+		//Close down
+    sd.deinit();
+    printf("Unmounted...\n\r");
+    lcd.cls();
+    lcd.printf("Unmounted...\n\n");
+}
+
+FILE* SD_Open(string _fileName)
+{
+	  //Open to WRITE
+	string fp_string = "/sd/";
+	fp_string += _fileName;
+    FILE* fp = fopen(fp_string.c_str(),"a");
+    if (fp == NULL) {
+        error("Could not open file for write\n\r");
+        lcd.cls();
+        lcd.printf("CANNOT OPEN FILE\n\n");
+        errorCode(FATAL);
+    }
+		return fp;
 }
